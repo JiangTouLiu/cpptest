@@ -17,10 +17,22 @@ public:
 	int getA();
 	void setA(int i);
 	void func();
+	Base0(Base0& b1);
+	~Base0()
+	{
+		cout << "call the Base0 destruction" << endl;
+	}
 private:
 	int a;
 	int b;
 };
+
+Base0::Base0(Base0& b1)
+{
+	a = b1.a;
+	b = b1.b;
+	cout << "call the Base0 copy construction" << endl;
+}
 
 int Base0::getA()
 {
@@ -48,14 +60,27 @@ public:
 	{
 		cout << "call the Base1 class construction" << endl;
 	}
+	Base1(Base1& b1);
 	int getA();
 	void setA(int i);
 	void func();
+	~Base1()
+	{
+		cout << "call the Base1 destruction" << endl;
+	}
+	
 private:
 	int a;
 	int b;
 	int c;
 };
+
+//Base1的复制构造函数可以调用Base0的复制构造函数，此时把Base1的对象直接传给Base0的复制构造函数就可以；如果这里不调用Base0的复制构造函数，则会调用Base0类的默认复制构造函数
+Base1::Base1(Base1& b1):Base0(b1)
+{
+	c = b1.c;
+	cout << "call the Base1 copy construction" << endl;
+}
 
 int Base1::getA()
 {
@@ -88,6 +113,11 @@ int main()
 	cout << "==============================================================" << endl;
 	b1.func();	//输出Base1 func
 	b1.Base0::func();	//输出Base0 func
+	
+	Base1 b2(1,2,3);
+	Base1 b3(b1);
+	cout << b2.getA() << endl;	//输出结果为1
+	cout << b3.getA() << endl;	//如果定义Base1类的复制构造函数的时候调用了Base0类定义的复制构造函数，则输出结果为1；否则结果为随机数
 
 	return 0;
 }
