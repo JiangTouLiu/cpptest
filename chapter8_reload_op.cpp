@@ -13,6 +13,12 @@ public:
 	void show();
 	Complex_num operator +(const Complex_num& c1);
 	Complex_num operator +(int a);
+	//非成员函数方式重载整型和复数的加法运算，使用friend声明为友元函数，从而在外部可以直接访问私有成员
+	friend Complex_num operator +(int i, const Complex_num& c);
+	//非成员函数方式重载复数和复数的减法运算，使用friend声明为友元函数，从而在外部可以直接访问私有成员
+	friend Complex_num operator -(const Complex_num& c1, const Complex_num& c2);
+	//非成员函数方式重载输出运算符，使用friend声明为友元函数，从而在外部可以直接访问私有成员
+	friend ostream& operator <<(ostream& out, const Complex_num& c);
 private:
 	int x;
 	int y;
@@ -20,19 +26,19 @@ private:
 
 Complex_num::Complex_num()
 {
-	cout << "call the defalut construction" << endl;
+	cout << "call the defalut ruction" << endl;
 }
 
 Complex_num::Complex_num(const int i, const int j) :x(i), y(j)
 {
-	cout << "call the construction" << endl;
+	cout << "call the ruction" << endl;
 }
 
 Complex_num::Complex_num(Complex_num& c)
 {
 	x = c.x;
 	y = c.y;
-	cout << "call teh copy construction" << endl;
+	cout << "call teh copy ruction" << endl;
 }
 
 Complex_num::~Complex_num()
@@ -60,6 +66,27 @@ Complex_num Complex_num::operator +(int a)
 	return c;
 }
 
+//实现加法重载，由于是非类内的成员函数（全局函数），所以不用类名进行限定
+Complex_num operator +(int i, const Complex_num& c)
+{
+	Complex_num b(i + c.x, c.y);
+	return b;
+}
+
+//实现加法重载，由于是非类内的成员函数（全局函数），所以不用类名进行限定
+Complex_num operator -(const Complex_num& c1, const Complex_num& c2)
+{
+	Complex_num c(c1.x + c2.x, c1.y + c2.y);
+	return c;
+}
+
+//实现加法重载，由于是非类内的成员函数（全局函数），所以不用类名进行限定
+ostream& operator <<(ostream& out, const Complex_num& c)
+{
+	out << "(" << c.x << "," << c.y << ")";
+	return out;
+}
+
 int main()
 {
 	Complex_num c1(10, 10);     //call the construction
@@ -78,7 +105,17 @@ int main()
                               //call the destruction 
 	c3.show();                  //(40,30)
                               //call the destruction
-                              //call the destruction                               
+                              //call the destruction     
+
+	Complex_num c4(10, 10);
+	Complex_num c5(5, 5);
+	cout << "c4:" << c1 << endl;
+	cout << "c5:" << c2 << endl;
+	Complex_num c6(0, 0);
+	c6 = c4 - c5;
+	cout << "c4 - c5" << c6 << endl;
+	int i = 20;
+	c6 = i + c4;
+	cout << "i + c4 " << c6 << endl;
 	return 0;
 }
-
