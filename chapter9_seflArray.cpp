@@ -152,8 +152,8 @@ void Array<T>::resetSize(int s)
         assert(s >= 0);
         if (size != s)
         {
+                T* tmp = new T[s];
                 int n = (size < s)? size:s;
-                T* tmp = new T[n];
                 for (int i=0;i<n;i++)
                 {
                         tmp[i] = list[i];
