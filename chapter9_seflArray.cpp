@@ -22,7 +22,26 @@ class Array
 
 int main()
 {
-
+        Array<int> a(10);
+        for (int i=0;i<10;i++)
+        {
+                a[i] = i;
+        }
+        for (int i=0;i<10;i++)
+        {
+                cout << a[i] << " ";
+        }
+        cout << endl;
+        Array<double> d(10);
+        for (int i=0;i<10;i++)
+        {
+                d[i] = 1.1 + i;
+        }
+        for (int i=0;i<10;i++)
+        {
+                cout << d[i] << " ";
+        }
+        cout << endl;
 }
 
 template <class T>
@@ -130,5 +149,18 @@ int Array<T>::getSize() const
 template <class T>
 void Array<T>::resetSize(int s)
 {
+        assert(s >= 0);
+        if (size != s)
+        {
+                int n = (size < s)? size:s;
+                T* tmp = new T[n];
+                for (int i=0;i<n;i++)
+                {
+                        tmp[i] = list[i];
+                }
+                delete [] list;
+                list = tmp;
+                size = s;
+        }
 
 }
