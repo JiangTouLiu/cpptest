@@ -85,6 +85,34 @@ void insertSort(T a[], int n)
         }
 }
 
+//交换函数，交换两个变量的值
+template <class T>
+void my_swap(T& a, T& b)
+{
+        T tmp = a;
+        a = b;
+        b = tmp;
+}
+
+//选择排序
+template <class T>
+void select_sort(T a[], int n)
+{
+        for (int i =0 ;i< n-1;i++)
+        {
+                int min = i;
+                min = i;
+                for (int j=i+1;j<n;j++)
+                {
+                        if (a[j] < a[min])
+                        {
+                                min = j;
+                        }
+                }
+                my_swap(a[i], a[min]);
+        }
+}
+
 int main()
 {
         int a[] = {5,2,6,1,9};
@@ -114,5 +142,34 @@ int main()
                 pa[i].show();   //输出显示排序后pa数组的每一项
         }
         cout << endl;
+        
+        //使用选择排序对整型和Point类数组进行排序
+        int arr[5] = {8,3,9,2,6};
+        for (int i = 0;i<5;i++)
+        {
+                cout << arr[i] << " ";
+        }
+        cout << endl << "====================================" << endl;
+
+        select_sort(arr, 5);
+        for (int i = 0;i<5;i++)
+        {
+                cout << arr[i] << " ";
+        }
+        cout << endl;
+        Point p1(3,5), p2(7,10), p3(6,13), p4(9,12), p5(15, 20), p6(20, 30); 
+        Point pa[] = {p1, p2, p3, p4, p5, p6};
+        for (int i =0;i<6;i++)
+        {
+                pa[i].show();
+        }
+        cout << endl << "==============================================" << endl;
+        select_sort(pa, 6);
+        for (int i =0;i<6;i++)
+        {
+                pa[i].show();
+        }
+        cout << endl;
+        return 0;
         return 0;
 }
