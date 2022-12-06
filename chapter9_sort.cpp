@@ -113,6 +113,26 @@ void select_sort(T a[], int n)
         }
 }
 
+//冒泡排序
+template <class T>
+void bubble_sort(T a[], int n)
+{
+        int i = n-1;
+        while (i > 0)   //当最后一次交换的位置为0时，说明已经有序
+        {
+                int lastch = 0;
+                for (int j=0;j<i;j++)
+                {
+                        if (a[j] > a[j+1])
+                        {
+                                my_swap(a[j], a[j+1]);
+                                lastch = j;     //记录最后一次交换的位置，说明后面的数据已经都有序了
+                        }
+                }
+                i = lastch;     //将最后一次交换的位置赋值给i，从而控制循环次数
+        }
+}
+
 int main()
 {
         int a[] = {5,2,6,1,9};
